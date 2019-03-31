@@ -1,42 +1,14 @@
-# 基本运算符（Basic Operators）
------------------
-
-> 1.0
-> 翻译：[XieLingWang](https://github.com/xielingwang)
-> 校对：[EvilCome](https://github.com/Evilcome)
-
-> 2.0
-> 翻译+校对：[JackAlan](https://github.com/AlanMelody)
-
-> 2.1
-> 校对：[shanks](http://codebuild.me)
-
-> 2.2
-> 翻译+校对：[Cee](https://github.com/Cee) 校对：[SketchK](https://github.com/SketchK)，2016-05-11    
-> 3.0.1，shanks，2016-11-11
-
-本页包含内容：
-
-- [术语](#terminology)
-- [赋值运算符](#assignment_operator)
-- [算术运算符](#arithmetic_operators)
-- [组合赋值运算符](#compound_assignment_operators)
-- [比较运算符](#comparison_operators)
-- [三目运算符](#ternary_conditional_operator)
-- [空合运算符](#nil_coalescing_operator)
-- [区间运算符](#range_operators)
-- [逻辑运算符](#logical_operators)
+# 基本运算符
 
 *运算符*是检查、改变、合并值的特殊符号或短语。例如，加号（`+`）将两个数相加（如 `let i = 1 + 2`）。更复杂的运算例子包括逻辑与运算符 `&&`（如 `if enteredDoorCode && passedRetinaScan`）。
 
-Swift 支持大部分标准 C 语言的运算符，且改进许多特性来减少常规编码错误。如：赋值符（`=`）不返回值，以防止把想要判断相等运算符（`==`）的地方写成赋值符导致的错误。算术运算符（`+`，`-`，`*`，`/`，`%`等）会检测并不允许值溢出，以此来避免保存变量时由于变量大于或小于其类型所能承载的范围时导致的异常结果。当然允许你使用 Swift 的溢出运算符来实现溢出。详情参见[溢出运算符](../chapter2/25_Advanced_Operators.html#overflow_operators)。
+Swift 支持大部分标准 C 语言的运算符，且为了减少常见编码错误做了部分改进。如：赋值符（`=`）不再有返回值，这样就消除了手误将判等运算符（`==`）写成赋值符导致代码错误的缺陷。算术运算符（`+`，`-`，`*`，`/`，`%` 等）的结果会被检测并禁止值溢出，以此来避免保存变量时由于变量大于或小于其类型所能承载的范围时导致的异常结果。当然允许你使用 Swift 的溢出运算符来实现溢出。详情参见[溢出运算符](./26_Advanced_Operators.md#overflow_operators)。
 
-Swift 还提供了 C 语言没有的表达两数之间的值的区间运算符（`a..<b` 和 `a...b`），这方便我们表达一个区间内的数值。
+Swift 还提供了 C 语言没有的区间运算符，例如 `a..<b` 或 `a...b`，这方便我们表达一个区间内的数值。
 
-本章节只描述了 Swift 中的基本运算符，[高级运算符](../chapter2/25_Advanced_Operators.html)这章会包含 Swift 中的高级运算符，及如何自定义运算符，及如何进行自定义类型的运算符重载。
+本章节只描述了 Swift 中的基本运算符，[高级运算符](./26_Advanced_Operators.md)这章会包含 Swift 中的高级运算符，及如何自定义运算符，及如何进行自定义类型的运算符重载。
 
-<a name="terminology"></a>
-## 术语
+## 术语 {#terminology}
 
 运算符分为一元、二元和三元运算符:
 
@@ -46,8 +18,7 @@ Swift 还提供了 C 语言没有的表达两数之间的值的区间运算符�
 
 受运算符影响的值叫*操作数*，在表达式 `1 + 2` 中，加号 `+` 是二元运算符，它的两个操作数是值 `1` 和 `2`。
 
-<a name="assignment_operator"></a>
-## 赋值运算符
+## 赋值运算符 {#assignment_operator}
 
 *赋值运算符*（`a = b`），表示用 `b` 的值来初始化或更新 `a` 的值：
 
@@ -65,18 +36,17 @@ let (x, y) = (1, 2)
 // 现在 x 等于 1，y 等于 2
 ```
 
-与 C 语言和 Objective-C 不同，Swift 的赋值操作并不返回任何值。所以以下代码是错误的：
+与 C 语言和 Objective-C 不同，Swift 的赋值操作并不返回任何值。所以下面语句是无效的：
 
 ```swift
 if x = y {
-	// 此句错误, 因为 x = y 并不返回任何值
+	// 此句错误，因为 x = y 并不返回任何值
 }
 ```
 
-这个特性使你无法把（`==`）错写成（`=`），由于 `if x = y` 是错误代码，Swift 能帮你避免此类错误发生。
+通过将 `if x = y` 标记为无效语句，Swift 能帮你避免把 （`==`）错写成（`=`）这类错误的出现。
 
-<a name="arithmetic_operators"></a>
-## 算术运算符
+## 算术运算符 {#arithmetic_operators}
 
 Swift 中所有数值类型都支持了基本的四则*算术运算符*：
 
@@ -92,7 +62,7 @@ Swift 中所有数值类型都支持了基本的四则*算术运算符*：
 10.0 / 2.5  // 等于 4.0
 ```
 
-与 C 语言和 Objective-C 不同的是，Swift 默认情况下不允许在数值运算中出现溢出情况。但是你可以使用 Swift 的溢出运算符来实现溢出运算（如 `a &+ b`）。详情参见[溢出运算符](../chapter2/25_Advanced_Operators.html#overflow_operators)。
+与 C 语言和 Objective-C 不同的是，Swift 默认情况下不允许在数值运算中出现溢出情况。但是你可以使用 Swift 的溢出运算符来实现溢出运算（如 `a &+ b`）。详情参见[溢出运算符](./26_Advanced_Operators.md#overflow_operators)。
 
 加法运算符也可用于 `String` 的拼接：
 
@@ -100,16 +70,17 @@ Swift 中所有数值类型都支持了基本的四则*算术运算符*：
 "hello, " + "world"  // 等于 "hello, world"
 ```
 
-### 求余运算符
+### 求余运算符 {#remainder_operator}
 
-*求余运算符*（`a % b`）是计算 `b` 的多少倍刚刚好可以容入`a`，返回多出来的那部分（余数）。
+*求余运算符*（`a % b`）是计算 `b` 的多少倍刚刚好可以容入 `a`，返回多出来的那部分（余数）。
 
-> 注意：  
-求余运算符（`%`）在其他语言也叫*取模运算符*。然而严格说来，我们看该运算符对负数的操作结果，「求余」比「取模」更合适些。
+> 注意
+> 
+> 求余运算符（`%`）在其他语言也叫*取模运算符*。但是严格说来，我们看该运算符对负数的操作结果，「求余」比「取模」更合适些。
 
 我们来谈谈取余是怎么回事，计算 `9 % 4`，你先计算出 `4` 的多少倍会刚好可以容入 `9` 中：
 
-![Art/remainderInteger_2x.png](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/remainderInteger_2x.png "Art/remainderInteger_2x.png")
+![Art/remainderInteger_2x.png](https://docs.swift.org/swift-book/_images/remainderInteger_2x.png "Art/remainderInteger_2x.png")
 
 你可以在 `9` 中放入两个 `4`，那余数是 1（用橙色标出）。
 
@@ -119,11 +90,11 @@ Swift 中所有数值类型都支持了基本的四则*算术运算符*：
 9 % 4    // 等于 1
 ```
 
-为了得到 `a % b` 的结果，`%` 计算了以下等式，并输出`余数`作为结果：
+为了得到 `a % b` 的结果，`%` 计算了以下等式，并输出 `余数`作为结果：
 
 	a = (b × 倍数) + 余数
 
-当`倍数`取最大值的时候，就会刚好可以容入 `a` 中。
+当 `倍数`取最大值的时候，就会刚好可以容入 `a` 中。
 
 把 `9` 和 `4` 代入等式中，我们得 `1`：
 
@@ -143,8 +114,7 @@ Swift 中所有数值类型都支持了基本的四则*算术运算符*：
 
 在对负数 `b` 求余时，`b` 的符号会被忽略。这意味着 `a % b` 和 `a % -b` 的结果是相同的。
 
-
-### 一元负号运算符
+### 一元负号运算符 {#unary_minus_operator}
 
 数值的正负号可以使用前缀 `-`（即*一元负号符*）来切换：
 
@@ -156,7 +126,7 @@ let plusThree = -minusThree   // plusThree 等于 3, 或 "负负3"
 
 一元负号符（`-`）写在操作数之前，中间没有空格。
 
-### 一元正号运算符
+### 一元正号运算符 {#unary_plus_operator}
 
 *一元正号符*（`+`）不做任何改变地返回操作数的值：
 
@@ -167,9 +137,7 @@ let alsoMinusSix = +minusSix  // alsoMinusSix 等于 -6
 
 虽然一元正号符什么都不会改变，但当你在使用一元负号来表达负数时，你可以使用一元正号来表达正数，如此你的代码会具有对称美。
 
-
-<a name="compound_assignment_operators"></a>
-## 组合赋值运算符
+## 组合赋值运算符 {#compound_assignment_operators}
 
 如同 C 语言，Swift 也提供把其他运算符和赋值运算（`=`）组合的*组合赋值运算符*，组合加运算（`+=`）是其中一个例子：
 
@@ -181,13 +149,13 @@ a += 2
 
 表达式 `a += 2` 是 `a = a + 2` 的简写，一个组合加运算就是把加法运算和赋值运算组合成进一个运算符里，同时完成两个运算任务。
 
-> 注意：  
-复合赋值运算没有返回值，`let b = a += 2`这类代码是错误。这不同于上面提到的自增和自减运算符。
+> 注意
+> 
+> 复合赋值运算没有返回值，`let b = a += 2` 这类代码是错误。这不同于上面提到的自增和自减运算符。
 
-在[Swift 标准库运算符参考](https://developer.apple.com/reference/swift/1851035-swift_standard_library_operators)章节里有复合运算符的完整列表。
+更多 Swift 标准库运算符的信息，请看[运算符声明](https://developer.apple.com/documentation/swift/operator_declarations)。
 ‌
-<a name="comparison_operators"></a>
-## 比较运算符（Comparison Operators）
+## 比较运算符（Comparison Operators） {#comparison_operators}
 
 所有标准 C 语言中的*比较运算符*都可以在 Swift 中使用：
 
@@ -198,8 +166,9 @@ a += 2
 - 大于等于（`a >= b`）
 - 小于等于（`a <= b`）
 
-> 注意：
-Swift 也提供恒等（`===`）和不恒等（`!==`）这两个比较符来判断两个对象是否引用同一个对象实例。更多细节在[类与结构](../chapter2/09_Classes_and_Structures.html)。
+> 注意
+> 
+> Swift 也提供恒等（`===`）和不恒等（`!==`）这两个比较符来判断两个对象是否引用同一个对象实例。更多细节在[类与结构](./09_Classes_and_Structures.md)章节的 **Identity Operators** 部分。
 
 每个比较运算都返回了一个标识表达式是否成立的布尔值：
 
@@ -212,7 +181,7 @@ Swift 也提供恒等（`===`）和不恒等（`!==`）这两个比较符来判�
 2 <= 1   // false, 因为 2 并不小于等于 1
 ```
 
-比较运算多用于条件语句，如`if`条件：
+比较运算多用于条件语句，如 `if` 条件：
 
 ```swift
 let name = "world"
@@ -221,14 +190,12 @@ if name == "world" {
 } else {
 	print("I'm sorry \(name), but I don't recognize you")
 }
-// 输出 "hello, world", 因为 `name` 就是等于 "world"
+// 输出“hello, world", 因为 `name` 就是等于 "world”
 ```
 
-关于 `if` 语句，请看[控制流](../chapter2/05_Control_Flow.html)。
+关于 `if` 语句，请看[控制流](./05_Control_Flow.md)。
 
-当元组中的值可以比较时，你也可以使用这些运算符来比较它们的大小。例如，因为 `Int` 和 `String` 类型的值可以比较，所以类型为 `(Int, String)` 的元组也可以被比较。相反，`Bool` 不能被比较，也意味着存有布尔类型的元组不能被比较。
-
-比较元组大小会按照从左到右、逐值比较的方式，直到发现有两个值不等时停止。如果所有的值都相等，那么这一对元组我们就称它们是相等的。例如：
+如果两个元组的元素相同，且长度相同的话，元组就可以被比较。比较元组大小会按照从左到右、逐值比较的方式，直到发现有两个值不等时停止。如果所有的值都相等，那么这一对元组我们就称它们是相等的。例如：
 
 ```swift
 (1, "zebra") < (2, "apple")   // true，因为 1 小于 2
@@ -236,17 +203,24 @@ if name == "world" {
 (4, "dog") == (4, "dog")      // true，因为 4 等于 4，dog 等于 dog
 ```
 
-在上面的例子中，你可以看到，在第一行中从左到右的比较行为。因为`1`小于`2`，所以`(1, "zebra")`小于`(2, "apple")`，不管元组剩下的值如何。所以`"zebra"`小于`"apple"`没有任何影响，因为元组的比较已经被第一个元素决定了。不过，当元组的第一个元素相同时候，第二个元素将会用作比较-第二行和第三行代码就发生了这样的比较。
+在上面的例子中，你可以看到，在第一行中从左到右的比较行为。因为 `1` 小于 `2`，所以 `(1, "zebra")` 小于 `(2, "apple")`，不管元组剩下的值如何。所以 `"zebra"` 大于 `"apple"` 对结果没有任何影响，因为元组的比较结果已经被第一个元素决定了。不过，当元组的第一个元素相同时候，第二个元素将会用作比较-第二行和第三行代码就发生了这样的比较。
 
->注意：    
-Swift 标准库只能比较七个以内元素的元组比较函数。如果你的元组元素超过七个时，你需要自己实现比较运算符。
+当元组中的元素都可以被比较时，你也可以使用这些运算符来比较它们的大小。例如，像下面展示的代码，你可以比较两个类型为 `(String, Int)` 的元组，因为 `Int` 和 `String` 类型的值可以比较。相反，`Bool` 不能被比较，也意味着存有布尔类型的元组不能被比较。
 
-<a name="ternary_conditional_operator"></a>
-## 三目运算符（Ternary Conditional Operator）
+```swift
+("blue", -1) < ("purple", 1)       // 正常，比较的结果为 true
+("blue", false) < ("purple", true) // 错误，因为 < 不能比较布尔类型
+```
 
-*三目运算符*的特殊在于它是有三个操作数的运算符，它的形式是 `问题 ? 答案 1 : 答案 2`。它简洁地表达根据 `问题`成立与否作出二选一的操作。如果 `问题` 成立，返回 `答案 1` 的结果；反之返回 `答案 2` 的结果。
+> 注意
+> 
+> Swift 标准库只能比较七个以内元素的元组比较函数。如果你的元组元素超过七个时，你需要自己实现比较运算符。
 
-三目运算符是以下代码的缩写形式：
+## 三元运算符（Ternary Conditional Operator） {#ternary_conditional_operator}
+
+*三元运算符*的特殊在于它是有三个操作数的运算符，它的形式是 `问题 ? 答案 1 : 答案 2`。它简洁地表达根据 `问题`成立与否作出二选一的操作。如果 `问题` 成立，返回 `答案 1` 的结果；反之返回 `答案 2` 的结果。
+
+三元运算符是以下代码的缩写形式：
 
 ```swift
 if question {
@@ -279,14 +253,13 @@ if hasHeader {
 // rowHeight 现在是 90
 ```
 
-第一段代码例子使用了三目运算，所以一行代码就能让我们得到正确答案。这比第二段代码简洁得多，无需将 `rowHeight` 定义成变量，因为它的值无需在 `if` 语句中改变。
+第一段代码例子使用了三元运算，所以一行代码就能让我们得到正确答案。这比第二段代码简洁得多，无需将 `rowHeight` 定义成变量，因为它的值无需在 `if` 语句中改变。
 
-三目运算提供有效率且便捷的方式来表达二选一的选择。需要注意的事，过度使用三目运算符会使简洁的代码变的难懂。我们应避免在一个组合语句中使用多个三目运算符。
+三元运算为二选一场景提供了一个非常便捷的表达形式。不过需要注意的是，滥用三元运算符会降低代码可读性。所以我们应避免在一个复合语句中使用多个三元运算符。
 
-<a name="nil_coalescing_operator"></a>
-## 空合运算符（Nil Coalescing Operator）
+## 空合运算符（Nil Coalescing Operator） {#nil_coalescing_operator}
 
-*空合运算符*（`a ?? b`）将对可选类型 `a` 进行空判断，如果 `a` 包含一个值就进行解封，否则就返回一个默认值 `b`。表达式 `a` 必须是 Optional 类型。默认值 `b` 的类型必须要和 `a` 存储值的类型保持一致。
+*空合运算符*（`a ?? b`）将对可选类型 `a` 进行空判断，如果 `a` 包含一个值就进行解包，否则就返回一个默认值 `b`。表达式 `a` 必须是 Optional 类型。默认值 `b` 的类型必须要和 `a` 存储值的类型保持一致。
 
 空合运算符是对以下代码的简短表达方法：
 
@@ -294,10 +267,11 @@ if hasHeader {
 a != nil ? a! : b
 ```
 
-上述代码使用了三目运算符。当可选类型 `a` 的值不为空时，进行强制解封（`a!`），访问 `a` 中的值；反之返回默认值 `b`。无疑空合运算符（`??`）提供了一种更为优雅的方式去封装条件判断和解封两种行为，显得简洁以及更具可读性。
+上述代码使用了三元运算符。当可选类型 `a` 的值不为空时，进行强制解封（`a!`），访问 `a` 中的值；反之返回默认值 `b`。无疑空合运算符（`??`）提供了一种更为优雅的方式去封装条件判断和解封两种行为，显得简洁以及更具可读性。
 
-> 注意：
-如果 `a` 为非空值（`non-nil`），那么值 `b` 将不会被计算。这也就是所谓的*短路求值*。
+> 注意
+> 
+> 如果 `a` 为非空值（`non-nil`），那么值 `b` 将不会被计算。这也就是所谓的*短路求值*。
 
 下文例子采用空合运算符，实现了在默认颜色名和可选自定义颜色名之间抉择：
 
@@ -312,7 +286,7 @@ var colorNameToUse = userDefinedColorName ?? defaultColorName
 `userDefinedColorName` 变量被定义为一个可选的 `String` 类型，默认值为 `nil`。由于 `userDefinedColorName` 是一个可选类型，我们可以使用空合运算符去判断其值。在上一个例子中，通过空合运算符为一个名为 `colorNameToUse` 的变量赋予一个字符串类型初始值。
 由于 `userDefinedColorName` 值为空，因此表达式 `userDefinedColorName ?? defaultColorName` 返回 `defaultColorName` 的值，即 `red`。
 
-另一种情况，分配一个非空值（`non-nil`）给 `userDefinedColorName`，再次执行空合运算，运算结果为封包在 `userDefaultColorName` 中的值，而非默认值。
+如果你分配一个非空值（`non-nil`）给 `userDefinedColorName`，再次执行空合运算，运算结果为封包在 `userDefaultColorName` 中的值，而非默认值。
 
 ```swift
 userDefinedColorName = "green"
@@ -320,14 +294,14 @@ colorNameToUse = userDefinedColorName ?? defaultColorName
 // userDefinedColorName 非空，因此 colorNameToUse 的值为 "green"
 ```
 
-<a name="range_operators"></a>
-## 区间运算符（Range Operators）
+## 区间运算符（Range Operators） {#range_operators}
 
-Swift 提供了两个方便表达一个区间的值的*区间运算符*。
+Swift 提供了几种方便表达一个区间的值的*区间运算符*。
 
-### 闭区间运算符
+### 闭区间运算符 {#closed_range_operator}
+
 *闭区间运算符*（`a...b`）定义一个包含从 `a` 到 `b`（包括 `a` 和 `b`）的所有值的区间。`a` 的值不能超过 `b`。
-‌
+
 闭区间运算符在迭代一个区间的所有值时是非常有用的，如在 `for-in` 循环中：
 
 ```swift
@@ -341,9 +315,9 @@ for index in 1...5 {
 // 5 * 5 = 25
 ```
 
-关于 `for-in`，请看[控制流](../chapter2/05_Control_Flow.html)。
+关于 `for-in` 循环，请看[控制流](./05_Control_Flow.md)。
 
-### 半开区间运算符
+### 半开区间运算符 {#half-open_range_operator}
 
 *半开区间运算符*（`a..<b`）定义一个从 `a` 到 `b` 但不包括 `b` 的区间。
 之所以称为*半开区间*，是因为该区间包含第一个值而不包括最后的值。
@@ -362,10 +336,47 @@ for i in 0..<count {
 // 第 4 个人叫 Jack
 ```
 
-数组有 4 个元素，但 `0..<count` 只数到3（最后一个元素的下标），因为它是半开区间。关于数组，请查阅[数组](../chapter2/04_Collection_Types.html#arrays)。
+数组有 4 个元素，但 `0..<count` 只数到3（最后一个元素的下标），因为它是半开区间。关于数组，请查阅[数组](./04_Collection_Types.md#arrays)。
 
-<a name="logical_operators"></a>
-## 逻辑运算符（Logical Operators）
+### 单侧区间 {#one-sided_ranges}
+
+闭区间操作符有另一个表达形式，可以表达往一侧无限延伸的区间 —— 例如，一个包含了数组从索引 2 到结尾的所有值的区间。在这些情况下，你可以省略掉区间操作符一侧的值。这种区间叫做单侧区间，因为操作符只有一侧有值。例如：
+
+```swift
+for name in names[2...] {
+    print(name)
+}
+// Brian
+// Jack
+
+for name in names[...2] {
+    print(name)
+}
+// Anna
+// Alex
+// Brian
+```
+
+半开区间操作符也有单侧表达形式，附带上它的最终值。就像你使用区间去包含一个值，最终值并不会落在区间内。例如：
+
+```swift
+for name in names[..<2] {
+    print(name)
+}
+// Anna
+// Alex
+```
+
+单侧区间不止可以在下标里使用，也可以在别的情境下使用。你不能遍历省略了初始值的单侧区间，因为遍历的开端并不明显。你可以遍历一个省略最终值的单侧区间；然而，由于这种区间无限延伸的特性，请保证你在循环里有一个结束循环的分支。你也可以查看一个单侧区间是否包含某个特定的值，就像下面展示的那样。
+
+```swift
+let range = ...5
+range.contains(7)   // false
+range.contains(4)   // true
+range.contains(-1)  // true
+```
+
+## 逻辑运算符（Logical Operators） {#logical_operators}
 
 *逻辑运算符*的操作对象是逻辑布尔值。Swift 支持基于 C 语言的三个标准逻辑运算。
 
@@ -384,14 +395,14 @@ let allowedEntry = false
 if !allowedEntry {
 	print("ACCESS DENIED")
 }
-// 输出 "ACCESS DENIED"
+// 输出“ACCESS DENIED”
 ```
 
 `if !allowedEntry` 语句可以读作「如果非 allowedEntry」，接下一行代码只有在「非 allowedEntry」为 `true`，即 `allowEntry` 为 `false` 时被执行。
 
 在示例代码中，小心地选择布尔常量或变量有助于代码的可读性，并且避免使用双重逻辑非运算，或混乱的逻辑语句。
 
-### 逻辑与运算符
+### 逻辑与运算符 #{logical_and_operator}
 
 *逻辑与运算符*（`a && b`）表达了只有 `a` 和 `b` 的值都为 `true` 时，整个表达式的值才会是 `true`。
 
@@ -407,10 +418,10 @@ if enteredDoorCode && passedRetinaScan {
 } else {
 	print("ACCESS DENIED")
 }
-// 输出 "ACCESS DENIED"
+// 输出“ACCESS DENIED”
 ```
 
-### 逻辑或运算符
+### 逻辑或运算符 #{logical_or_operator}
 
 逻辑或运算符（`a || b`）是一个由两个连续的 `|` 组成的中置运算符。它表示了两个逻辑表达式的其中一个为 `true`，整个表达式就为 `true`。
 
@@ -426,10 +437,10 @@ if hasDoorKey || knowsOverridePassword {
 } else {
 	print("ACCESS DENIED")
 }
-// 输出 "Welcome!"
+// 输出“Welcome!”
 ```
 
-### 逻辑运算符组合计算
+### 逻辑运算符组合计算 {#combining_logical_operators}
 
 我们可以组合多个逻辑运算符来表达一个复合逻辑：
 
@@ -439,7 +450,7 @@ if enteredDoorCode && passedRetinaScan || hasDoorKey || knowsOverridePassword {
 } else {
 	print("ACCESS DENIED")
 }
-// 输出 "Welcome!"
+// 输出“Welcome!”
 ```
 
 这个例子使用了含多个 `&&` 和 `||` 的复合逻辑。但无论怎样，`&&` 和 `||` 始终只能操作两个值。所以这实际是三个简单逻辑连续操作的结果。我们来解读一下：
@@ -448,10 +459,11 @@ if enteredDoorCode && passedRetinaScan || hasDoorKey || knowsOverridePassword {
 
 前两种情况，我们都不满足，所以前两个简单逻辑的结果是 `false`，但是我们是知道紧急情况下重置的密码的，所以整个复杂表达式的值还是 `true`。
 
-> 注意：
-Swift 逻辑操作符 `&&` 和 `||` 是左结合的，这意味着拥有多元逻辑操作符的复合表达式优先计算最左边的子表达式。
+> 注意
+> 
+> Swift 逻辑操作符 `&&` 和 `||` 是左结合的，这意味着拥有多元逻辑操作符的复合表达式优先计算最左边的子表达式。
 
-### 使用括号来明确优先级
+### 使用括号来明确优先级 {#explicit_parentheses}
 
 为了一个复杂表达式更容易读懂，在合适的地方使用括号来明确优先级是很有效的，虽然它并非必要的。在上个关于门的权限的例子中，我们给第一个部分加个括号，使它看起来逻辑更明确：
 
@@ -461,7 +473,7 @@ if (enteredDoorCode && passedRetinaScan) || hasDoorKey || knowsOverridePassword 
 } else {
 	print("ACCESS DENIED")
 }
-// 输出 "Welcome!"
+// 输出“Welcome!”
 ```
 
 这括号使得前两个值被看成整个逻辑表达中独立的一个部分。虽然有括号和没括号的输出结果是一样的，但对于读代码的人来说有括号的代码更清晰。可读性比简洁性更重要，请在可以让你代码变清晰的地方加个括号吧！
